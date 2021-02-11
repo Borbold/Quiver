@@ -1,0 +1,53 @@
+<Defaults>
+	<InputField class='inputType' resizeTextForBestFit='True'
+		onEndEdit='SetInputTypeAmmunition' resizeTextMaxSize='60'/>
+	<Text class='bestFitT' resizeTextForBestFit='True'
+		resizeTextMaxSize='60'/>
+	<Button class='bestFitB' resizeTextForBestFit='True'
+		resizeTextMaxSize='60'/>
+	<InputField class='inputValue' resizeTextForBestFit='True'
+		onEndEdit='SetValueAmmunition' resizeTextMaxSize='60'/>
+</Defaults>
+
+<Panel position='0 0 -18' visibility='Black'>
+	<Button onClick='PanelTool' image='uiGear' height='30' width='25' offsetXY='90 85'/>
+	<Button id='panelClose' onClick='Reset' image='uiClose' height='25' width='20' offsetXY='120 85' active='false'/>
+	<VerticalScrollView id='panelTool' height='200' width='250'
+		color='black' offsetXY='0 200' active='false' verticalScrollbarVisibility='AutoHideAndExpandViewport'>
+		<TableLayout height='100' cellSpacing='2'>
+			<Row preferredHeight='35'>
+				<Cell>
+					<InputField placeholder='Max' resizeTextForBestFit='true' characterValidation='Integer'
+						resizeTextMaxSize='50' color='#ffffff' onEndEdit='SetInputMax'/>
+				</Cell>
+				<Cell>
+					<Button text='Add new ammo type' resizeTextForBestFit='true'
+						resizeTextMaxSize='50' color='#44944a' onClick='SetNewAmmunitionType'/>
+				</Cell>
+			</Row>
+			<NewRowS />
+		</TableLayout>
+	</VerticalScrollView>
+</Panel>
+
+<Panel position='0 0 -18'>
+	<Button onClick='PanelTool2' image='uiBars' height='30' width='25' offsetXY='-90 85'/>
+	<VerticalScrollView id='panelTool2' height='200' width='250'
+		color='black' offsetXY='0 200' active='false' verticalScrollbarVisibility='AutoHideAndExpandViewport'>
+		<TableLayout height='100' cellSpacing='2' rowBackgroundColor='#ffffff'>
+			<Row preferredHeight='35'>
+				<Cell dontUseTableCellBackground='true' columnSpan='4'>
+					<Text class='bestFit' text='Max value Am.'/>
+				</Cell>
+				<Cell dontUseTableCellBackground='true' columnSpan='4'>
+					<Text id='maxText' class='bestFit' text='1'/>
+				</Cell>
+			</Row>
+			<NewRowC />
+		</TableLayout>
+	</VerticalScrollView>
+</Panel>
+
+<Panel position='0 0 -18'>
+	<Button id='buttonM' onClick='MinusValue' image='uiBars' height='30' width='25' offsetXY='0 -75' active='false'/>
+</Panel>
