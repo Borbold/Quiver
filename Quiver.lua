@@ -1,4 +1,4 @@
-function UpdateSave(reset)
+﻿function UpdateSave(reset)
   self.UI.setValue("maxText", maxValue)
   local changeXml = (not reset and self.UI.getXml()) or nil
   local dataToSave = {
@@ -139,7 +139,17 @@ function SetNewAmmunitionType(_, _, _, isOnLoad)
 
   startXml = startXml .. newType .. endXml
   self.UI.setXml(startXml)
-  UpdateSave()
+  EnlargeHeightPanel()
+  Wait.Frames(|| UpdateSave(), 5)
+end
+
+function EnlargeHeightPanel()
+  if(countAmunition > 7) then
+    --preferredHeight=25
+    local newHeightPanel = countAmunition*25 + 27
+    Wait.Frames(|| self.UI.setAttribute("TLSet", "height", newHeightPanel), 5)
+    Wait.Frames(|| self.UI.setAttribute("TLUse", "height", newHeightPanel), 5)
+  end
 end
 
 function SetInputTypeAmmunition(_, input, id)
@@ -267,12 +277,14 @@ end
 
 function RebuildAssets()
   local root = 'https://raw.githubusercontent.com/RobMayer/TTSLibrary/master/ui/'
+  local sight = 'http://www.clipartbest.com/cliparts/xcg/aKd/xcgaKdqdi.jpg'
   local assets = {
     {name = 'uiGear', url = root .. 'gear.png'},
     {name = 'uiBars', url = root .. 'bars.png'},
     {name = 'uiPlus', url = root .. 'plus.png'},
     {name = 'uiClose', url = root .. 'close.png'},
     {name = 'uiCube', url = root .. 'cube.png'},
+    {name = 'uiSight', url = sight},
   }
   self.UI.setCustomAssets(assets)
 end
