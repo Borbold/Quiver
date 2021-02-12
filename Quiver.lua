@@ -1,9 +1,9 @@
-﻿function UpdateSave(reset)
+function UpdateSave(reset)
   self.UI.setValue("maxText", maxValue)
   local changeXml = (not reset and self.UI.getXml()) or nil
   local dataToSave = {
     ["maxValue"] = maxValue, ["countAmunition"] = countAmunition, ["changeXml"] = changeXml,
-    ["fildForAmmunitions"] = fildForAmmunitions, ["selectTypeId"] = selectTypeId
+    ["fildForAmmunitions"] = fildForAmmunitions
   }
   local savedData = JSON.encode(dataToSave)
   self.script_state = savedData
@@ -38,13 +38,8 @@ function Confer(savedData)
     local loadedData = JSON.decode(savedData)
     maxValue = loadedData.maxValue or 1
     countAmunition = loadedData.countAmunition or 1
-    selectTypeId = loadedData.selectTypeId or -1
     fildForAmmunitions = loadedData.fildForAmmunitions or {}
-    if(not loadedData.changeXml) then
-      SetNewAmmunitionType()
-    else
-      self.UI.setXml(loadedData.changeXml)
-    end
+    SetNewAmmunitionType(_, _, _, true)
   end
 end
 
@@ -68,10 +63,10 @@ function PanelTool2()
   Wait.Frames(UpdateSave, 5)
 end
 
-function SetInputMax(_, input)
+function SetInputMax(_, input, id)
   input = tonumber(input)
   maxValue = input
-  UpdateSave()
+  Wait.Frames(UpdateSave, 5)
 end
 
 function PlusValue(_, _, id)
@@ -81,9 +76,11 @@ function MinusValue(_, _, id)
   SetValueAmmunition(_, -1, id)
 end
 
-function SetNewAmmunitionType()
-  fildForAmmunitions[tostring(countAmunition)] = {name = "", color = "", value = 0}
-  countAmunition = countAmunition + 1
+function SetNewAmmunitionType(_, _, _, isOnLoad)
+  if(not isOnLoad) then
+    fildForAmmunitions[tostring(countAmunition)] = {name = "", color = "000000", value = 0}
+    countAmunition = countAmunition + 1
+  end
 
   local allXml = originalXml
 
@@ -116,7 +113,7 @@ function SetNewAmmunitionType()
     newType = newType .. [[
       <Row preferredHeight='25'>
         <Cell columnSpan='4' dontUseTableCellBackground='true'>
-          <Text id='nameT]]..i..[[' class='bestFitT' value=']]..v.name..[['/>
+          <Text id='nameT]]..i..[[' class='bestFitT' text=']]..v.name..[[' color='#]]..v.color..[['/>
         </Cell>
         <Cell columnSpan='2' dontUseTableCellBackground='true'>
           <InputField id='value]]..i..[[' class='inputValue' color='#44944a' placeholder='value'
@@ -147,15 +144,17 @@ end
 
 function SetInputTypeAmmunition(_, input, id)
   if(id:find("name")) then
+    self.UI.setAttribute(id, "text", input)
     id = id:sub(5, #id)
     fildForAmmunitions[id].name = input
     self.UI.setValue("nameT"..id, input)
   elseif(id:find("color")) then
+    self.UI.setAttribute(id, "text", input)
     id = id:sub(6, #id)
     fildForAmmunitions[id].color = input
     self.UI.setAttribute("nameT"..id, "color", "#"..input)
   end
-  UpdateSave()
+  Wait.Frames(UpdateSave, 5)
 end
 
 function SetValueAmmunition(_, input, id)
