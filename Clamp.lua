@@ -27,7 +27,7 @@ function onLoad(savedData)
     ["a"] = 10, ["b"] = 11, ["c"] = 12, ["d"] = 13, ["e"] = 14, ["f"] = 15,
   }
 
-  maxValue, countAmunition, selectTypeId = 1, 1, -1
+  maxValue, countAmunition = 1, 1
   fildForAmmunitions = {}
   Wait.Frames(|| Confer(savedData), 15)
 end
@@ -120,7 +120,7 @@ function SetNewAmmunitionType(_, _, _, isOnLoad)
             characterValidation='Integer' text=']]..v.value..[['/>
         </Cell>
         <Cell columnSpan='1' dontUseTableCellBackground='true'>
-          <Button text=']]..i..[[' class='bestFitB'/>
+          <Button id='rearrange]]..i..[[' text=']]..i..[[' onClick='Rearrange' class='bestFitB' visibility='Black'/>
         </Cell>
         <Cell columnSpan='1' dontUseTableCellBackground='true'>
           <Button id='buttonP]]..i..[[' image='uiPlus' class='bestFitB' onClick='PlusValue'/>
@@ -235,10 +235,54 @@ function SetValueAmmunition(_, input, id)
 end
 
 function Reset()
-  maxValue, countAmunition, selectTypeId = 1, 1, -1
+  maxValue, countAmunition = 1, 1
   fildForAmmunitions = {}
   self.UI.setXml(originalXml)
   UpdateSave(true)
+end
+
+function OnJame()
+  broadcastToAll("Оружие заклинило! Вылетела вся обойма")
+  for i,v in pairs(fildForAmmunitions) do
+    v.value = 0
+  end
+  SetNewAmmunitionType(_, _, _, true)
+  Wait.Frames(|| UpdateSave(), 5)
+end
+function OnJameOneRound()
+  broadcastToAll("Оружие заклинило! Вылетел один боеприпас")
+  for i,v in pairs(fildForAmmunitions) do
+    if(v.value > 0) then
+      v.value = v.value - 1
+      break
+    end
+  end
+  SetNewAmmunitionType(_, _, _, true)
+  Wait.Frames(|| UpdateSave(), 5)
+end
+
+function Rearrange(_, _, id)
+  if(id:find("rearrange")) then
+    id = id:sub(10, #id)
+    local flagRarange = false
+    local findType
+    for i,v in pairs(fildForAmmunitions) do
+      if(flagRarange) then
+        fildForAmmunitions[i] = fildForAmmunitions[tostring(tonumber(i + 1))]
+        if(not fildForAmmunitions[tostring(tonumber(i + 1))]) then
+          fildForAmmunitions[tostring(tonumber(i))] = findType
+          break
+        end
+      end
+      if(id == i) then
+        flagRarange = true
+        findType = fildForAmmunitions[i]
+        fildForAmmunitions[i] = fildForAmmunitions[tostring(tonumber(i + 1))]
+      end
+    end
+  end
+  SetNewAmmunitionType(_, _, _, true)
+  Wait.Frames(|| UpdateSave(), 5)
 end
 
 function DenoteSth()

@@ -51,3 +51,10 @@
 <Panel position='0 0 -18'>
 	<Button id='buttonM' onClick='MinusValue' image='uiSight' height='30' width='30' offsetXY='0 -75'/>
 </Panel>
+
+<Panel position='0 0 -18' visibility='Black'>
+	<Button onClick='OnJame' image='uiClose' height='30' width='30' offsetXY='90 -85'/>
+</Panel>
+<Panel position='0 0 -18' visibility='Black'>
+	<Button onClick='OnJameOneRound' image='uiClose' height='30' width='30' offsetXY='-90 -85' colors='#7d7f7d|#7d7f7d'/>
+</Panel>
