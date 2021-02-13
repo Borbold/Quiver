@@ -246,18 +246,19 @@ function OnJame()
   for i,v in pairs(fildForAmmunitions) do
     v.value = 0
   end
-  SetNewAmmunitionType(_, _, _, true)
+  Wait.Frames(|| SetNewAmmunitionType(_, _, _, true), 3)
   Wait.Frames(|| UpdateSave(), 5)
 end
 function OnJameOneRound()
   broadcastToAll("Оружие заклинило! Вылетел один боеприпас")
-  for i,v in pairs(fildForAmmunitions) do
-    if(v.value > 0) then
-      v.value = v.value - 1
+  for i,_ in pairs(fildForAmmunitions) do
+    local j = countAmunition - tonumber(i)
+    if(fildForAmmunitions[tostring(j)].value > 0) then
+      fildForAmmunitions[tostring(j)].value = fildForAmmunitions[tostring(j)].value - 1
       break
     end
   end
-  SetNewAmmunitionType(_, _, _, true)
+  Wait.Frames(|| SetNewAmmunitionType(_, _, _, true), 3)
   Wait.Frames(|| UpdateSave(), 5)
 end
 
