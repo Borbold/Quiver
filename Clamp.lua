@@ -29,7 +29,7 @@ function onLoad(savedData)
 
   maxValue, countAmunition = 1, 1
   fildForAmmunitions = {}
-  Wait.Frames(|| Confer(savedData), 15)
+  Wait.time(|| Confer(savedData), 0.5)
 end
 function Confer(savedData)
   originalXml = self.UI.getXml()
@@ -51,7 +51,7 @@ function PanelTool()
     self.UI.hide("panelTool")
     self.UI.hide("panelClose")
   end
-  Wait.Frames(UpdateSave, 5)
+  Wait.time(UpdateSave, 0.2)
 end
 
 function PanelTool2()
@@ -60,13 +60,13 @@ function PanelTool2()
   else
     self.UI.hide("panelTool2")
   end
-  Wait.Frames(UpdateSave, 5)
+  Wait.time(UpdateSave, 0.2)
 end
 
 function SetInputMax(_, input, id)
   input = tonumber(input)
   maxValue = input
-  Wait.Frames(UpdateSave, 5)
+  Wait.time(UpdateSave, 0.2)
 end
 
 function PlusValue(_, _, id)
@@ -140,15 +140,15 @@ function SetNewAmmunitionType(_, _, _, isOnLoad)
   startXml = startXml .. newType .. endXml
   self.UI.setXml(startXml)
   EnlargeHeightPanel()
-  Wait.Frames(|| UpdateSave(), 5)
+  Wait.time(|| UpdateSave(), 0.2)
 end
 
 function EnlargeHeightPanel()
   if(countAmunition > 7) then
     --preferredHeight=25
     local newHeightPanel = countAmunition*25 + 27
-    Wait.Frames(|| self.UI.setAttribute("TLSet", "height", newHeightPanel), 5)
-    Wait.Frames(|| self.UI.setAttribute("TLUse", "height", newHeightPanel), 5)
+    Wait.time(|| self.UI.setAttribute("TLSet", "height", newHeightPanel), 0.2)
+    Wait.time(|| self.UI.setAttribute("TLUse", "height", newHeightPanel), 0.2)
   end
 end
 
@@ -164,7 +164,7 @@ function SetInputTypeAmmunition(_, input, id)
     fildForAmmunitions[id].color = input
     self.UI.setAttribute("nameT"..id, "color", "#"..input)
   end
-  Wait.Frames(UpdateSave, 5)
+  Wait.time(UpdateSave, 0.2)
 end
 
 function SetValueAmmunition(_, input, id)
@@ -246,8 +246,8 @@ function OnJame()
   for i,v in pairs(fildForAmmunitions) do
     v.value = 0
   end
-  Wait.Frames(|| SetNewAmmunitionType(_, _, _, true), 3)
-  Wait.Frames(|| UpdateSave(), 5)
+  Wait.time(|| SetNewAmmunitionType(_, _, _, true), 0.2)
+  Wait.time(|| UpdateSave(), 0.4)
 end
 function OnJameOneRound()
   broadcastToAll("Оружие заклинило! Вылетел один боеприпас")
@@ -258,8 +258,8 @@ function OnJameOneRound()
       break
     end
   end
-  Wait.Frames(|| SetNewAmmunitionType(_, _, _, true), 3)
-  Wait.Frames(|| UpdateSave(), 5)
+  Wait.time(|| SetNewAmmunitionType(_, _, _, true), 0.2)
+  Wait.time(|| UpdateSave(), 0.4)
 end
 
 function Rearrange(_, _, id)
@@ -283,7 +283,7 @@ function Rearrange(_, _, id)
     end
   end
   SetNewAmmunitionType(_, _, _, true)
-  Wait.Frames(|| UpdateSave(), 5)
+  Wait.time(|| UpdateSave(), 0.2)
 end
 
 function DenoteSth()
