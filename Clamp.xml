@@ -11,7 +11,8 @@
 
 <Panel position='0 0 -18' visibility='Black'>
 	<Button onClick='PanelTool' image='uiGear' height='30' width='30' offsetXY='90 85'/>
-	<Button id='panelClose' onClick='Reset' image='uiClose' height='25' width='25' offsetXY='120 85' active='false'/>
+	<Button id='panelClose' onClick='Reset' image='uiClose' height='25' width='25' offsetXY='120 85' active='false'
+		tooltip='Reset' tooltipFontSize='25'/>
 	<VerticalScrollView id='panelTool' height='200' width='250'
 		color='black' offsetXY='0 200' active='false' verticalScrollbarVisibility='AutoHideAndExpandViewport'>
 		<TableLayout id='TLSet' height='200' cellSpacing='2'>
@@ -49,12 +50,14 @@
 </Panel>
 
 <Panel position='0 0 -18'>
-	<Button id='buttonM' onClick='MinusValue' image='uiSight' height='30' width='30' offsetXY='0 -75'/>
+	<Button id='buttonM' onClick='MinusValue' image='uiSight' height='30' width='30' offsetXY='0 -85'/>
 </Panel>
 
 <Panel position='0 0 -18' visibility='Black'>
-	<Button onClick='OnJame' image='uiClose' height='30' width='30' offsetXY='90 -85'/>
+	<Button onClick='OnJame' image='uiClose' height='30' width='30' offsetXY='90 -95'
+		tooltip='Клин обоймы' tooltipFontSize='25' tooltipPosition='Below'/>
 </Panel>
 <Panel position='0 0 -18' visibility='Black'>
-	<Button onClick='OnJameOneRound' image='uiClose' height='30' width='30' offsetXY='-90 -85' colors='#7d7f7d|#7d7f7d'/>
+	<Button onClick='OnJameOneRound' image='uiClose' height='30' width='30' offsetXY='-90 -95' colors='#7d7f7d|#7d7f7d'
+		tooltip='Клин патрон' tooltipFontSize='25' tooltipPosition='Below'/>
 </Panel>
